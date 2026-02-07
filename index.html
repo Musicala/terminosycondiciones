@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Acuerdo de Experiencia · Musicala</title>
+
+  <!-- Light-only -->
+  <meta name="color-scheme" content="light" />
+  <meta name="theme-color" content="#ffffff" />
+
+  <!-- SEO -->
+  <meta name="description" content="Acuerdo de Experiencia Musicala: lectura por secciones, búsqueda rápida y aceptación al finalizar." />
+
+  <!-- Social / Share (OG) -->
+  <meta property="og:title" content="Acuerdo de Experiencia · Musicala" />
+  <meta property="og:description" content="Lee por secciones, busca rápido y acepta al final." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_CO" />
+  <!-- Si tienes una imagen para compartir, descomenta y ponla -->
+  <!-- <meta property="og:image" content="og-image.png" /> -->
+
+  <!-- iOS PWA-ish -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+  <!-- Icons (si los tienes) -->
+  <!-- <link rel="icon" href="favicon.ico" /> -->
+  <!-- <link rel="apple-touch-icon" href="apple-touch-icon.png" /> -->
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <!-- Background glow -->
+  <div class="bgGlow" aria-hidden="true"></div>
+
+  <!-- Skip link (a11y) -->
+  <a class="skip" href="#article">Saltar al contenido</a>
+
+  <header class="topbar" role="banner">
+    <div class="brand" aria-label="Marca Musicala">
+      <img class="logo" src="logo.png" alt="Logo de Musicala" loading="eager" decoding="async" />
+      <div class="brandText">
+        <div class="kicker">Acuerdo de Experiencia</div>
+        <h1>Términos y condiciones del servicio</h1>
+      </div>
+    </div>
+
+    <div class="topActions" role="group" aria-label="Acciones">
+      <div class="pill" id="progressPill" aria-live="polite" aria-atomic="true">0% leído</div>
+      <!-- ✅ Botón "Exportar aceptación" eliminado -->
+    </div>
+  </header>
+
+  <main class="shell" role="main">
+    <aside class="sidebar" aria-label="Navegación del acuerdo">
+      <div class="searchWrap">
+        <label class="srOnly" for="searchInput">Buscar en el acuerdo</label>
+        <input
+          id="searchInput"
+          class="input"
+          type="search"
+          placeholder="Buscar en el acuerdo…"
+          autocomplete="off"
+          inputmode="search"
+          enterkeyhint="search"
+          autocapitalize="none"
+          spellcheck="false"
+          aria-label="Buscar en el acuerdo"
+          aria-controls="article nav"
+          aria-describedby="resultsInfo"
+        />
+      </div>
+
+      <nav class="nav" id="nav" aria-label="Secciones"></nav>
+
+      <!-- Gate de finalización -->
+      <section class="gateCard" id="gateCard" aria-label="Finaliza la lectura" data-state="locked">
+        <div class="gateTitle">Finaliza la lectura</div>
+        <p class="muted" id="gateMsg">
+          Para habilitar la aceptación, marca como leídas todas las secciones. Cuando llegues al 100%, esto se activará.
+        </p>
+
+        <div class="gateBar" aria-hidden="true">
+          <div class="gateFill" id="gateFill" style="width:0%"></div>
+        </div>
+
+        <div class="gateRow">
+          <span class="gatePill" id="gatePill" aria-live="polite" aria-atomic="true">0% completado</span>
+          <span class="gateHint" id="gateHint" aria-live="polite" aria-atomic="true">Bloqueado</span>
+        </div>
+      </section>
+
+      <!-- ACEPTACIÓN: escondida al inicio, aparece SOLO cuando se complete 100% -->
+      <section class="acceptCard" id="acceptCard" aria-label="Aceptación del acuerdo" hidden>
+        <div class="acceptTitle">Aceptación</div>
+        <p class="muted" id="acceptHelp">
+          Completa tus datos y acepta para generar un comprobante. Esto se guarda en este dispositivo.
+        </p>
+
+        <div class="grid2" role="group" aria-label="Datos del usuario">
+          <label class="field">
+            <span>Nombre completo</span>
+            <input
+              id="fullName"
+              class="input"
+              type="text"
+              placeholder="Ej: Juan Pérez"
+              autocomplete="name"
+              autocapitalize="words"
+              enterkeyhint="next"
+              maxlength="80"
+              aria-describedby="acceptHelp"
+            />
+          </label>
+
+          <label class="field">
+            <span>Documento (CC / TI)</span>
+            <input
+              id="docId"
+              class="input"
+              type="text"
+              placeholder="Ej: 1234567890"
+              inputmode="numeric"
+              pattern="[0-9]*"
+              autocomplete="off"
+              enterkeyhint="done"
+              maxlength="16"
+              aria-describedby="acceptHelp"
+            />
+          </label>
+        </div>
+
+        <label class="check">
+          <input id="acceptCheck" type="checkbox" />
+          <span>Acepto el Acuerdo de Experiencia Musicala.</span>
+        </label>
+
+        <button class="btn full" id="btnAccept" type="button" aria-describedby="acceptHelp">
+          Guardar aceptación
+        </button>
+
+        <div class="acceptMeta" id="acceptMeta" hidden aria-live="polite" aria-atomic="true"></div>
+
+        <p class="muted" style="margin-top:10px">
+          Si tu dispositivo lo permite, se abrirá WhatsApp con el mensaje listo para enviar.
+        </p>
+      </section>
+
+      <noscript>
+        <section class="gateCard" aria-label="JavaScript requerido" style="margin-top:12px">
+          <div class="gateTitle">JavaScript requerido</div>
+          <p class="muted">
+            Este acuerdo interactivo necesita JavaScript para cargar las secciones y registrar el progreso.
+          </p>
+        </section>
+      </noscript>
+    </aside>
+
+    <section class="content" aria-label="Contenido del acuerdo">
+      <div class="contentInner">
+        <section class="heroCard" aria-label="Resumen">
+          <div class="heroTop">
+            <div>
+              <div class="heroEyebrow">Musicala · 2026</div>
+              <div class="heroTitle">Lee por secciones, busca rápido y acepta al final.</div>
+              <div class="heroSub">
+                Esto existe para cuidar la experiencia: claridad, respeto, seguridad y organización.
+              </div>
+            </div>
+
+            <div class="heroBadge" id="versionBadge" aria-label="Versión del documento">Versión</div>
+          </div>
+
+          <div class="heroStats" role="group" aria-label="Estadísticas">
+            <div class="stat">
+              <div class="statNum" id="statSections">0</div>
+              <div class="statLbl">Secciones</div>
+            </div>
+            <div class="stat">
+              <div class="statNum" id="statWords">0</div>
+              <div class="statLbl">Palabras</div>
+            </div>
+            <div class="stat">
+              <div class="statNum" id="statRead">0%</div>
+              <div class="statLbl">Progreso</div>
+            </div>
+          </div>
+        </section>
+
+        <div id="resultsInfo" class="resultsInfo" hidden aria-live="polite" aria-atomic="true"></div>
+
+        <article id="article" aria-label="Sección actual del acuerdo"></article>
+
+        <footer class="footer" role="contentinfo">
+          <div class="muted">
+            © Musicala · Este documento se presenta de forma interactiva para facilitar su lectura.
+          </div>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <!-- JS (defer = no bloquea render) -->
+  <script src="terms-data.js" defer></script>
+  <script src="app.js" defer></script>
+</body>
+</html>
